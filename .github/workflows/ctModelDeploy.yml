@@ -34,4 +34,7 @@ jobs:
     steps:
       - id: modelname
         run: |
-          echo "modelname=$(echo ${{ toJson(github.event.issue.body) }} | yq .["model name"])" >> $GITHUB_ENV
+          echo "modelname=$(echo "${{ github.event.issue.body }}" | grep -oP 'model name :\s*\K\w+')" >> $GITHUB_ENV
+      - id: modelversion
+        run: |
+          echo "modelversion=$(cat ./versions/version)"
