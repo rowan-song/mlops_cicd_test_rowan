@@ -32,9 +32,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Model Name
-        env:
-          ISSUEBODY: ${{ github.event.issue.body }}
         id: modelname
         uses: mikefarah/yq@master
         with:
-          cmd: cat "$ISSUEBODY" | yq e '.["model name"]'
+          cmd: yq e '.["model name"]' '${{ github.event.issue.body }}'
+      - name: echo modelname
+        run: echo ${{ steps.modelname.outputs.result }}
