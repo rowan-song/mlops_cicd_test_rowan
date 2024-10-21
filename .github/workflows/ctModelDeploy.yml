@@ -15,7 +15,8 @@ jobs:
         id: timestamp
         run: |
           echo "timestamp=$(TZ=":Asia/Seoul" date -R|sed 's/.....$//')" >> $GITHUB_ENV
-      - run: |
+      - name: Add Comment
+        run: |
           if [ "$STATE_REASON" == "completed" ] || [ "$SENDER" != "github-actions" ]; then
             gh issue comment "$NUMBER" --body "CT Model Deploy was approved at ${{env.timestamp}}."
           else
@@ -27,3 +28,10 @@ jobs:
           SENDER: ${{ github.event.sender.login }}
           NUMBER: ${{ github.event.issue.number }}
           STATE_REASON: ${{ github.event.issue.state_reason }}
+  add-tags:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Model Name
+        id: modelname
+        run: |
+          echo "modelname=gh issue view ${{ github.event.issue.number }} --jq '.["model name"]'" >> "$GITHUB_ENV
