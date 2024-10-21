@@ -35,4 +35,4 @@ jobs:
         id: modelname
         uses: mikefarah/yq@master
         with: |
-          cat ${{ github.event.issue.body }} | yq e '.["model name"]'
+          cat "${{ github.event.issue.body }}" | yq e '.["model name"]'
