@@ -34,4 +34,4 @@ jobs:
     steps:
       - id: modelname
         run: |
-          echo "modelname=$(echo "${{ toJson(github.event.issue.body) }}" | yq .["model name"])" >> $GITHUB_ENV
+          echo "modelname=$(echo ${{ toJson(github.event.issue.body) }} | yq .["model name"])" >> $GITHUB_ENV
