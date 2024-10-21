@@ -37,4 +37,4 @@ jobs:
           echo "modelname=$(echo "${{ github.event.issue.body }}" | grep -oP 'model name :\s*\K\w+')" >> $GITHUB_ENV
       - id: modelversion
         run: |
-          echo "modelversion=$(cat ./versions/version)"
+          echo "modelversion=$(cat ./versions/version)"  >> $GITHUB_ENV
