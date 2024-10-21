@@ -37,10 +37,11 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: 'release'
+          fetch-depth: 0
       - name: Get SourceVersion
         id: sourceversion
         run: |
-          echo "sourceversion=$(git describe --tags --abbrev=0 | grep -Eo '[0-9]{1,}.[0-9]{1,}.[0-9]{1,}')" >> $GITHUB_ENV
+          echo "sourceversion=$(git describe --tags `git rev-list --tags --max-count=1`| grep -Eo '[0-9]{1,}.[0-9]{1,}.[0-9]{1,}')" >> $GITHUB_ENV
       - name: Get ModelName
         id: modelname
         run: |
