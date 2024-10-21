@@ -30,6 +30,8 @@ jobs:
           STATE_REASON: ${{ github.event.issue.state_reason }}
   add-tags:
     needs: add-comment
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,7 +50,7 @@ jobs:
       - name: test env
         run: |
           env | grep model
-      - uses: actions/github-script@v6
+      - uses: actions/github-script@v7
         name: Create tag
         with:
           script: |
