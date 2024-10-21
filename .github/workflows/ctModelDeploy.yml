@@ -33,6 +33,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Get SourceVersion
+        id: sourceversion
+        run: |
+          echo "sourceversion=$(git describe --tags --abbrev=0 | grep -Eo '[0-9]{1,}.[0-9]{1,}.[0-9]{1,}')" >> $GITHUB_ENV
       - name: Get ModelName
         id: modelname
         run: |
@@ -44,3 +48,14 @@ jobs:
       - name: test env
         run: |
           env | grep model
+      - uses: actions/github-script@v6
+        name: Create tag
+        with:
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: `refs/tags/${{env.sourceversion}}-model-${{env.modelversion}}`,
+              sha: context.sha,
+            })
+        
