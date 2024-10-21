@@ -1,2 +1,2 @@
 # mlops_cicd_test_rowan
-mlops cicd workflow 개발을 위한 임시 repo2
+github actions workflow 개발중인 rowan의 코드 테스트를 위한 repo

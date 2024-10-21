@@ -1,0 +1,28 @@
+name: CT Model Deploy
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  add-comment:
+    permissions:
+      issues: write
+    runs-on: ubuntu-latest
+    if: contains(github.event.issue.labels.*.name, 'ct')
+    steps:
+      - name: Get current timestamp
+        id: timestamp
+        run: |
+          echo "timestamp=$(date +'%s')" >> "$GITHUB_ENV"
+      - run: |
+          if [ "$STATE_REASON" == "completed" ] || [ "$SENDER" != "github-actions" ]; then
+            gh issue comment "$NUMBER" --body "CT Model Deploy was approved at ${{env.timestamp}}."
+          else
+            gh issue comment "$NUMBER" --body "CT Model Deploy was disapproved at ${{env.timestamp}}."
+          fi
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SENDER: ${{ github.event.sender.login }}
+          NUMBER: ${{ github.event.issue.number }}
+          STATE_REASON: ${{ github.event.issue.state_reason }}
