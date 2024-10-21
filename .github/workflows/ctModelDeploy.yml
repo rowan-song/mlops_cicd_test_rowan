@@ -32,6 +32,7 @@ jobs:
     needs: add-comment
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
       - name: Get ModelName
         id: modelname
         run: |
