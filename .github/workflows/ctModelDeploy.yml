@@ -32,9 +32,14 @@ jobs:
     needs: add-comment
     runs-on: ubuntu-latest
     steps:
-      - id: modelname
+      - name: Get ModelName
+        id: modelname
         run: |
           echo "modelname=$(echo "${{ github.event.issue.body }}" | grep -oP 'model name :\s*\K\w+')" >> $GITHUB_ENV
-      - id: modelversion
+      - name: Get ModelVersion
+        id: modelversion
         run: |
           echo "modelversion=$(cat ./versions/version)"  >> $GITHUB_ENV
+      - name: test env
+        run: |
+          env | grep model
