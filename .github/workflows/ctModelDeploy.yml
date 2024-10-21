@@ -33,5 +33,6 @@ jobs:
     steps:
       - name: Get Model Name
         id: modelname
-        run: |
-          echo "modelname=gh issue view ${{ github.event.issue.number }} --jq '.["model name"]'" >> "$GITHUB_ENV
+        uses: mikefarah/yq@master
+        with: |
+          cat ${{ github.event.issue.body }} | yq e '.["model name"]'
