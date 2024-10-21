@@ -58,4 +58,6 @@ jobs:
               ref: `refs/tags/${{env.sourceversion}}-model-${{env.modelversion}}`,
               sha: context.sha,
             })
-        
+      - name: Add Comment
+        run: |
+          gh issue comment "${{ github.event.issue.number }}" --body "${{env.sourceversion}}-model-${{env.modelversion}} tagging was completed"
