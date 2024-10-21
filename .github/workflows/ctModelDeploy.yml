@@ -14,7 +14,7 @@ jobs:
       - name: Get current timestamp
         id: timestamp
         run: |
-          echo "timestamp=$(date +'%s')" >> "$GITHUB_ENV"
+          echo "timestamp=$(date +%Y%m%d%H%M)" >> "$GITHUB_ENV"
       - run: |
           if [ "$STATE_REASON" == "completed" ] || [ "$SENDER" != "github-actions" ]; then
             gh issue comment "$NUMBER" --body "CT Model Deploy was approved at ${{env.timestamp}}."
